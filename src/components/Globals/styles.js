@@ -31,6 +31,10 @@ export const useStyles = makeStyles({
     AppBar: {
         boxShadow: 'none',
         background: '#3f51b5',
+
+        position: 'absolute',
+        top: 0,
+        left: 0,
     },
     body: {
         width: '100%',
@@ -104,10 +108,9 @@ export const useStyles = makeStyles({
         background: '#757de8',
 
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-
-
     },
     inner: {
         width: '80%',

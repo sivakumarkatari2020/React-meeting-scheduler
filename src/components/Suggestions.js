@@ -1,4 +1,7 @@
 import { Box,Typography,FormControl,FormLabel,FormGroup,FormControlLabel,Checkbox,Button } from '@mui/material';
+import {AppBar,Toolbar,IconButton,MenuList, MenuItem} from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
+import MenuIcon from '@mui/icons-material/Menu';
 import axios from 'axios';
 import React from 'react';
 import { useStyles } from './Globals/styles';
@@ -10,6 +13,7 @@ function Suggestions(props) {
     const {values} = props;
 
     const [suggestions,setSuggestions] = React.useState([]);
+    const [isNavOpen,setNavOpen] = React.useState(false);
 
     //fetching the sample endpoints
     React.useEffect(()=>{
@@ -26,6 +30,40 @@ function Suggestions(props) {
 
     return (
         <Box className={styles.page2}>
+            <Box className={styles.wrapper}>
+                <AppBar position="static" className={styles.AppBar}>
+                    <Toolbar variant="dense" className={styles.AppBar} onClick={()=>{setNavOpen(!isNavOpen)}}>
+                        <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                            {
+                                isNavOpen
+                                ?  <ClearIcon />
+                                :  <MenuIcon /> 
+                            }
+                        </IconButton>
+                        <Typography variant="h6" color="inherit" component="div">
+                            Buffer & Bag AB
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                {
+                    isNavOpen
+                    ? <MenuList className={styles.menuList}>
+                        <MenuItem 
+                            component={NavLink}
+                            to="/calendar"
+                        >
+                            Calendar
+                        </MenuItem>
+                        <MenuItem 
+                            component={NavLink}
+                            to="/scheduler"
+                        >
+                            scheduler
+                        </MenuItem>
+                    </MenuList>
+                    : ''
+                }
+            </Box>
             <Typography variant="h4" className={styles.headerText}>Suggested Time Slots</Typography>
             {
                 suggestions.map(item=>(

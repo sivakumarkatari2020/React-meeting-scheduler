@@ -1,5 +1,5 @@
 import React from 'react';
-import {Redirect,NavLink} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import {useStyles} from './Globals/styles.js';
 import {Box,AppBar,Toolbar,IconButton,Typography,Stack,Button, MenuList, MenuItem} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -64,9 +64,8 @@ function HomePage() {
         <Box className={styles.page} sx={{ flexGrow: 1 }}>
             <Box className={styles.wrapper}>
                 <AppBar position="static" className={styles.AppBar}>
-                    <Toolbar variant="dense" className={styles.AppBar}>
-                        <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} 
-                            onclick={()=>{setNavOpen(!isNavOpen)}} >
+                    <Toolbar variant="dense" className={styles.AppBar} onClick={()=>{setNavOpen(!isNavOpen)}}>
+                        <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
                             {
                                 isNavOpen
                                 ?  <ClearIcon />
@@ -81,11 +80,17 @@ function HomePage() {
                 {
                     isNavOpen
                     ? <MenuList className={styles.menuList}>
-                        <MenuItem>
-                            link1
+                        <MenuItem 
+                            component={NavLink}
+                            to="/calendar"
+                        >
+                            Calendar
                         </MenuItem>
-                        <MenuItem>
-                            link2
+                        <MenuItem 
+                            component={NavLink}
+                            to="/scheduler"
+                        >
+                            scheduler
                         </MenuItem>
                     </MenuList>
                     : ''

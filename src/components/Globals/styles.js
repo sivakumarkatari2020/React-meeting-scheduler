@@ -5,6 +5,13 @@ export const useStyles = makeStyles({
         height: '100vh',
         background: '#f2f2f2',
     },
+    page2:{
+        width: '100%',
+        minHeight: '100vh',
+        height: '100%',
+        background: '#f2f2f2',
+        padding: '2rem',
+    },
     header:{
         width: '100%',
         height: '40vh',
@@ -91,5 +98,101 @@ export const useStyles = makeStyles({
         maxHeight: '600px',
 
     },
+    outer:{
+        width: '100vw',
+        height: '100vh',
+        background: '#757de8',
+
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+
+
+    },
+    inner: {
+        width: '80%',
+        height: '70%',
+        padding: '1rem',
+        minHeight: '500px',
+        borderRadius: '5px',
+        background: '#FFF',
+        color: '#2D3F4B',
+        margin: 'auto',
+
+        display: 'flex',
+        flexDirection: 'row',
+        flexFlow: 'wrap',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+
+        '@media (max-width:800px)': {
+            justifyContent: 'center',
+            alignItems: 'center',
+
+            width: '90%',
+        },
+    },
+    headerText: {
+        width: '100%',
+        margin: '2rem 2rem',
+    },
+    formControlBig: {
+        width: '500px',
+        minHeight: '50px',
+        margin: '1.5rem',
+        borderRadius: '5px',
+        background: '#e6ebff',
+
+        '@media (max-width:1440px)': {
+            margin: '1rem',
+        },
+    },
+    inputControl: {
+        width: '300px',
+        height: '50px',
+        margin: '1.5rem',
+        background: '#e6ebff',
+    },
+    selectList: {
+        width: '300px',
+        height: '50px',
+        margin: '1.5rem',
+    },
+    dateField: {
+        width: '300px',
+        height: '40px',
+        margin: '2rem',
+
+        '@media (max-width:1440px)': {
+            margin: '1rem',
+        },
+    },
+    input: {
+        fontSize: '16px',
+    },
+    formButton: {
+        minWidth: '300px',
+        borderRadius: '5px',
+        height: '50px',
+        margin: '2rem',
+        background: 'blue',
+        color: '#FFF',
+
+        "&:hover": {
+            background: 'blue'
+        }
+    },
+    dayScheduleBox: {
+        width: '90%',
+        padding: '.5rem',
+        margin: '2rem 0',
+    },
+    reserveButton: {
+        minWidth: '300px',
+        borderRadius: '5px',
+        height: '50px',
+        background: 'blue',
+        color: '#FFF',
+    }
 })
 

@@ -1,18 +1,14 @@
 import React from 'react';
 import moment from 'moment';
 import { Box } from '@mui/material';
-import {useStyles} from './Globals/styles';
-import {AppBar,Toolbar,IconButton,MenuList, MenuItem,Typography} from '@mui/material';
-import ClearIcon from '@mui/icons-material/Clear';
-import MenuIcon from '@mui/icons-material/Menu';
-import {NavLink} from 'react-router-dom';
+import {useStyles} from './styles.js';
+import NavigationBar from './NavigationBar';
 import {Inject,ScheduleComponent,Day,WorkWeek,Month,Agenda,ResourcesDirective,ResourceDirective} from '@syncfusion/ej2-react-schedule';
 //import axios from 'axios';
 
 function Calendar() {
 
     const styles = useStyles();
-    const [isNavOpen,setNavOpen] = React.useState(false);
 
     //sample data 
     const [localData,setlocalData] =  React.useState([{
@@ -62,40 +58,7 @@ function Calendar() {
 
     return (
         <Box className={styles.page}>
-            <Box className={styles.wrapper}>
-                <AppBar position="static" className={styles.AppBar}>
-                    <Toolbar variant="dense" className={styles.AppBar} onClick={()=>{setNavOpen(!isNavOpen)}}>
-                        <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-                            {
-                                isNavOpen
-                                ?  <ClearIcon />
-                                :  <MenuIcon /> 
-                            }
-                        </IconButton>
-                        <Typography variant="h6" color="inherit" component="div">
-                            Buffer & Bag AB
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-                {
-                    isNavOpen
-                    ? <MenuList className={styles.menuList}>
-                        <MenuItem 
-                            component={NavLink}
-                            to="/calendar"
-                        >
-                            Calendar
-                        </MenuItem>
-                        <MenuItem 
-                            component={NavLink}
-                            to="/scheduler"
-                        >
-                            scheduler
-                        </MenuItem>
-                    </MenuList>
-                    : ''
-                }
-            </Box>
+            <NavigationBar />
             <ScheduleComponent currentView='Month' selectedDate={moment()} eventSettings={{dataSource: localData}}>
                 <ResourcesDirective >
                     <ResourceDirective field='ResourceID' title='Resource Name' name='Resources' textField='Name' idField='id' colorField='Color'></ResourceDirective>

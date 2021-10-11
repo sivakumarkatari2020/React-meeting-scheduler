@@ -1,11 +1,10 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-import {useStyles} from './Globals/styles.js';
-import {Box,AppBar,Toolbar,IconButton,Typography,Stack,Button, MenuList, MenuItem} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import ClearIcon from '@mui/icons-material/Clear';
+import {useStyles} from './styles.js';
+import {Box,Typography,Stack,Button} from '@mui/material';
 import EventIcon from '@mui/icons-material/Event';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import NavigationBar from './NavigationBar.js';
 
 function Header(){
 
@@ -58,44 +57,10 @@ function HomePage() {
 
     const styles = useStyles();
 
-    const [isNavOpen,setNavOpen] = React.useState(false);
 
     return (
         <Box className={styles.page} sx={{ flexGrow: 1 }}>
-            <Box className={styles.wrapper}>
-                <AppBar position="static" className={styles.AppBar}>
-                    <Toolbar variant="dense" className={styles.AppBar} onClick={()=>{setNavOpen(!isNavOpen)}}>
-                        <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-                            {
-                                isNavOpen
-                                ?  <ClearIcon />
-                                :  <MenuIcon /> 
-                            }
-                        </IconButton>
-                        <Typography variant="h6" color="inherit" component="div">
-                            Buffer & Bag AB
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-                {
-                    isNavOpen
-                    ? <MenuList className={styles.menuList}>
-                        <MenuItem 
-                            component={NavLink}
-                            to="/calendar"
-                        >
-                            Calendar
-                        </MenuItem>
-                        <MenuItem 
-                            component={NavLink}
-                            to="/scheduler"
-                        >
-                            scheduler
-                        </MenuItem>
-                    </MenuList>
-                    : ''
-                }
-            </Box>
+            <NavigationBar />
             <Header />
             <Body />
         </Box>

@@ -10,7 +10,6 @@ export const useStyles = makeStyles({
         minHeight: '100vh',
         height: '100%',
         background: '#f2f2f2',
-        padding: '2rem',
     },
     header:{
         width: '100%',
@@ -85,6 +84,7 @@ export const useStyles = makeStyles({
         position: 'absolute',
         top: 0,
         zIndex: '999',
+        background: '#FFF',
     },
     stepperOut: {
         height: '100vh',
@@ -138,6 +138,10 @@ export const useStyles = makeStyles({
     headerText: {
         width: '100%',
         margin: '2rem 2rem',
+    },
+    headerTextBig: {
+        width: '100%',
+        margin: '2rem',
     },
     formControlBig: {
         width: '500px',
@@ -196,6 +200,9 @@ export const useStyles = makeStyles({
         height: '50px',
         background: 'blue',
         color: '#FFF',
-    }
+    },
+    suggestionsBody: {
+        padding: '2rem',
+    },
 })
 

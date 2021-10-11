@@ -3,12 +3,10 @@ import axios from 'axios';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import Autocomplete from '@mui/material/Autocomplete';
 import {Box,FormControl,TextField,InputLabel,Select,MenuItem,Button, Typography, } from '@mui/material';
-import {AppBar,Toolbar,IconButton,MenuList} from '@mui/material';
-import ClearIcon from '@mui/icons-material/Clear';
-import MenuIcon from '@mui/icons-material/Menu';
-import { useStyles } from './Globals/styles';
+import { useStyles } from './styles.js';
 import 'react-day-picker/lib/style.css';
 import { Redirect,NavLink } from 'react-router-dom';
+import NavigationBar from './NavigationBar';
 
 function Scheduler(props) {
 
@@ -16,7 +14,6 @@ function Scheduler(props) {
     const styles = useStyles();
 
     const [employeeData,setEmployeeData] = React.useState([]);
-    const [isNavOpen,setNavOpen] = React.useState(false);
 
     //Getting employee data from local files
     React.useEffect(()=>{
@@ -41,40 +38,7 @@ function Scheduler(props) {
 
     return (
         <Box className={styles.outer}>
-            <Box className={styles.wrapper}>
-                <AppBar position="static" className={styles.AppBar}>
-                    <Toolbar variant="dense" className={styles.AppBar} onClick={()=>{setNavOpen(!isNavOpen)}}>
-                        <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-                            {
-                                isNavOpen
-                                ?  <ClearIcon />
-                                :  <MenuIcon /> 
-                            }
-                        </IconButton>
-                        <Typography variant="h6" color="inherit" component="div">
-                            Buffer & Bag AB
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-                {
-                    isNavOpen
-                    ? <MenuList className={styles.menuList}>
-                        <MenuItem 
-                            component={NavLink}
-                            to="/calendar"
-                        >
-                            Calendar
-                        </MenuItem>
-                        <MenuItem 
-                            component={NavLink}
-                            to="/scheduler"
-                        >
-                            scheduler
-                        </MenuItem>
-                    </MenuList>
-                    : ''
-                }
-            </Box>
+            <NavigationBar />
             <Box className={styles.inner}>
                 <Typography variant="h4" className={styles.headerText}>Check for time slots</Typography>
                 <FormControl 
@@ -155,9 +119,10 @@ function Scheduler(props) {
                     />
                 </FormControl>
                 <Button
-                to="/calendar"
+                to="/suggestions"
                 component={NavLink}
                 className={styles.reserveButton}
+                onClick={submitHandle}
                 >
                 <Typography variant={'paragraph'}>Submit</Typography>
             </Button>

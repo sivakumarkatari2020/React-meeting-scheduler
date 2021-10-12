@@ -47,15 +47,6 @@ function Calendar() {
         {Name: 'lillie',Id:4,color:'#000000'},
     ]
 
-    //Original data should be fetched here
-    //React.useEffect(()=>{
-    //    axios.get("url")
-    //        .then((result)=>setlocalData(result.data))
-    //        .catch((err)=>{
-    //            return err
-    //        })
-    //},[])
-
     return (
         <Box className={styles.page}>
             <NavigationBar />

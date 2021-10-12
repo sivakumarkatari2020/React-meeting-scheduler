@@ -4,6 +4,7 @@ import React from 'react';
 import { useStyles } from './styles.js';
 import {NavLink} from 'react-router-dom';
 import NavigationBar from './NavigationBar';
+import Loader from './Loader.js';
 
 function Suggestions(props) {
 
@@ -14,9 +15,9 @@ function Suggestions(props) {
 
     //fetching the sample endpoints
     React.useEffect(()=>{
-        /*the original endpoint
-        "/suggestions?employees={values.employee}&fromDate=${values.from_date}&toDate=${values.to_date}&officehoursStart={values.office_hours_start}&officehoursEnd={values.office_hours_end}&meetingLength=${values.meetingLength}"*/
-        axios.get("./suggestions.json")
+        const url = `https://stark-castle-84894.herokuapp.com/suggestions?employees=248086622848468681706182205280565990732&employees=246529435182890502343890064029443600078&fromDate=2015-01-20&toDate=2015-01-22&officehoursStart=8%3A00&officehoursEnd=17%3A00&meetingLength=60`;
+        console.log(values);
+        axios.get(url)
             .then((result)=>{
                 setSuggestions(result.data.suggestions)
             })
@@ -31,7 +32,8 @@ function Suggestions(props) {
             <Box className={styles.suggestionsBody}>
                 <Typography variant="h4" className={styles.headerTextBig}>Suggested Time Slots</Typography>
                 {
-                    suggestions.map(item=>(
+                    suggestions.length > 0
+                    ? suggestions.map(item=>(
                         <Box className={styles.dayScheduleBox} key={item.date}>
                             <FormControl className={styles.formControlXL}>
                                 <FormLabel component="legend">Available slots on {item.date}</FormLabel>
@@ -49,6 +51,7 @@ function Suggestions(props) {
                             </FormControl>
                         </Box>
                     ))
+                    : <Loader />
                 }
                 <Button
                     to="/calendar"

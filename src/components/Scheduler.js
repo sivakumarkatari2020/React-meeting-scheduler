@@ -9,7 +9,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TimePicker from '@mui/lab/TimePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import { useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import 'react-day-picker/lib/style.css';
 import Loader from './Loader.js';
 import NavigationBar from './NavigationBar';
@@ -19,10 +19,10 @@ toast.configure();
 
 function Scheduler(props) {
 
-    const history = useHistory();
-
     const {values,setValues} = props;
     const styles = useStyles();
+
+    const isVerified = values.fromDate && values.toDate && values.MeetingLength && values.officeHoursStart && values.officeHoursEnd;
 
     const [employeeData,setEmployeeData] = React.useState([]);
     const [isSubmit,setSubmit] = React.useState(false);
@@ -52,7 +52,6 @@ function Scheduler(props) {
     const submitHandle = () => {
         if(values.fromDate && values.toDate && values.MeetingLength > 0){
             setSubmit(true);
-            history.push("/suggestions");
         }else{
             setSubmit(false);
             notifyFillForm("Fill the form to continue!");
@@ -174,12 +173,21 @@ function Scheduler(props) {
                                 />
                             </LocalizationProvider>
                         </FormControl>
-                        <Button
-                        className={styles.reserveButton}
-                        onClick={submitHandle}
-                        >
-                        <Typography variant={'paragraph'}>Submit</Typography>
-                    </Button>
+                        {
+                            isVerified
+                            ?   <Button
+                                    to="/suggestions"
+                                    component={NavLink}
+                                    className={styles.reserveButton}
+                                    onClick={submitHandle}
+                                    >
+                                    <Typography variant={'paragraph'}>Submit</Typography>
+                                </Button>
+                            :   <Button 
+                                    onClick={submitHandle}
+                                    className={styles.reserveButton}
+                                >Submit</Button>
+                        }
                     </Box>
                     </>
             }

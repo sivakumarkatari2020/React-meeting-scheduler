@@ -87,7 +87,6 @@ function Suggestions(props) {
                         <Typography variant={'paragraph'}>Reserve</Typography>
                     </Button>
                     :  <Button
-                        component={NavLink}
                         className={styles.reserveButton}
                         disabled
                     >

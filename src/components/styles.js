@@ -114,7 +114,7 @@ export const useStyles = makeStyles({
     },
     inner: {
         width: '80%',
-        height: '70%',
+        height: '500px',
         padding: '1rem',
         minHeight: '500px',
         borderRadius: '5px',
@@ -143,37 +143,6 @@ export const useStyles = makeStyles({
         width: '100%',
         margin: '2rem',
     },
-    formControlBig: {
-        width: '500px',
-        minHeight: '50px',
-        margin: '1.5rem',
-        borderRadius: '5px',
-        background: '#e6ebff',
-
-        '@media (max-width:1440px)': {
-            margin: '1rem',
-        },
-    },
-    inputControl: {
-        width: '300px',
-        height: '50px',
-        margin: '1.5rem',
-        background: '#e6ebff',
-    },
-    selectList: {
-        width: '300px',
-        height: '50px',
-        margin: '1.5rem',
-    },
-    dateField: {
-        width: '300px',
-        height: '40px',
-        margin: '2rem',
-
-        '@media (max-width:1440px)': {
-            margin: '1rem',
-        },
-    },
     input: {
         fontSize: '16px',
     },
@@ -184,7 +153,6 @@ export const useStyles = makeStyles({
         margin: '2rem',
         background: 'blue',
         color: '#FFF',
-
         "&:hover": {
             background: 'blue'
         }
@@ -193,13 +161,6 @@ export const useStyles = makeStyles({
         width: '90%',
         padding: '.5rem',
         margin: '2rem 0',
-    },
-    reserveButton: {
-        minWidth: '300px',
-        borderRadius: '5px',
-        height: '50px',
-        background: 'blue',
-        color: '#FFF',
     },
     suggestionsBody: {
         padding: '2rem',

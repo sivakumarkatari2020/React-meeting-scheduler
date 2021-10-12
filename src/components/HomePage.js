@@ -34,7 +34,7 @@ function Body(){
                     component={NavLink}
                     className={styles.button}
                 >
-                    <Typography variant={'paragraph'}>View this week's schedule</Typography>
+                    <Typography variant={'paragraph'} align={'center'}>View this week's schedule</Typography>
                 </Button>
             </Box>
             <Box className={styles.card} >
@@ -46,7 +46,7 @@ function Body(){
                     component={NavLink}
                     className={styles.button}
                 >
-                    <Typography variant={'paragraph'}>Schedule a new meeting</Typography>
+                    <Typography variant={'paragraph'} align={'center'}>Schedule a new meeting</Typography>
                 </Button>
             </Box>
         </Box>

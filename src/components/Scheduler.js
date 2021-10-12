@@ -1,17 +1,21 @@
 import React from 'react';
 import axios from 'axios';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import dateFormat from 'dateformat';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
+import {Box,FormControl,TextField,InputLabel,Select,MenuItem,Button, Typography, } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import TimePicker from '@mui/lab/TimePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import {Box,FormControl,TextField,InputLabel,Select,MenuItem,Button, Typography, } from '@mui/material';
-import { useStyles } from './styles.js';
-import 'react-day-picker/lib/style.css';
 import { useHistory } from 'react-router-dom';
-import NavigationBar from './NavigationBar';
+import 'react-day-picker/lib/style.css';
 import Loader from './Loader.js';
+import NavigationBar from './NavigationBar';
+import {useStyles} from './formStyles';
+
+toast.configure();
 
 function Scheduler(props) {
 
@@ -23,13 +27,35 @@ function Scheduler(props) {
     const [employeeData,setEmployeeData] = React.useState([]);
     const [isSubmit,setSubmit] = React.useState(false);
 
+    const notifyQueryLength = () => {
+        toast.info('Enter atleast 2 charecters!',{
+            autoClose: 2000,
+        });
+    }
+
+    const notifyFillForm = (msg) => {
+        toast.warn(msg,{
+            autoClose: 2000,
+        });
+    }
+
+    const emptyDataNotify = () => {
+        toast.error('No Employee Found!',{
+            autoClose: 3000,
+        })
+    }
+
+    const notifyRequestFailure = (msg) => {
+        toast.error(msg);
+    }
+
     const submitHandle = () => {
         if(values.fromDate && values.toDate && values.MeetingLength > 0){
             setSubmit(true);
             history.push("/suggestions");
         }else{
             setSubmit(false);
-            alert("Fill values first")
+            notifyFillForm("Fill the form to continue!");
         }
     }
 
@@ -37,11 +63,17 @@ function Scheduler(props) {
         if(query.length > 1){
             axios.get(`https://stark-castle-84894.herokuapp.com/employees?q=${query}`)
                 .then((result)=>{
-                    setEmployeeData(result.data.matches);
+                    if(result.data.matches.length < 1){
+                        emptyDataNotify();
+                    }else{
+                        setEmployeeData(result.data.matches);
+                    }
                 })
                 .catch((err)=>{
-                    console.log(err);
+                    notifyRequestFailure(err.message);
                 })
+        }else if(query.length === 1){
+            notifyQueryLength();
         }
     }
 
@@ -92,7 +124,7 @@ function Scheduler(props) {
                                 />
                             )}
                         />
-                        <FormControl variant="filled" className={styles.InputControl}>
+                        <FormControl variant="filled" className={styles.inputControl}>
                             <InputLabel id="select-meeting-length">Select Desired Meeting Length</InputLabel>
                             <Select
                                 labelId="select-meeting-length"

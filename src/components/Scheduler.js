@@ -4,6 +4,7 @@ import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import dateFormat from 'dateformat';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
+import DatePicker from '@mui/lab/DatePicker';
 import {Box,FormControl,TextField,InputLabel,Select,MenuItem,Button, Typography, } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import TimePicker from '@mui/lab/TimePicker';
@@ -90,20 +91,32 @@ function Scheduler(props) {
                                 styles.inputControl
                             }
                         >   
-                            <DayPickerInput className={styles.dateField}
-                                value={values.fromDate || ''}
-                                onDayChange={day => setValues({...values,fromDate: dateFormat(day,"yyyy-mm-dd")})} 
-                                placeholder="Select Start Date"/>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <DatePicker
+                                    label="Select Start Date"
+                                    value={values.fromDate || ''}
+                                    onChange={(newValue) => {
+                                        setValues({...values,fromDate: newValue});
+                                    }}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                            </LocalizationProvider>
                         </FormControl>
                         <FormControl 
                             className={
                                 styles.inputControl
                             }
                         >
-                            <DayPickerInput className={styles.dateField}
-                                value={values.toDate || ''}
-                                onDayChange={day => setValues({...values,toDate: dateFormat(day,"yyyy-mm-dd")})} 
-                                placeholder="Select End Date"/>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <DatePicker
+                                    label="Select End Date"
+                                    value={values.toDate || ''}
+                                    onChange={(newValue) => {
+                                        setValues({...values,toDate: newValue});
+                                    }}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                            </LocalizationProvider>
                         </FormControl>
                         <Autocomplete
                             className={styles.formControlBig}

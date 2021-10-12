@@ -28,10 +28,12 @@ export const useStyles = makeStyles({
         alignItems: 'flex-start',
 
         '@media (max-width:800px)': {
+            width: '90%',
+            height: '100%',
+            margin: 0,
             justifyContent: 'center',
             alignItems: 'center',
-
-            width: '90%',
+            borderRadius: 0,
         },
     },
     headerText: {

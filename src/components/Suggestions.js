@@ -34,7 +34,7 @@ function Suggestions(props) {
 
     const notifyEmptySuggestions = () => {
         toast.warn("No slots for this combo,change the dates or employes!");
-        toast.info("You're being redirected back to scheduler page!")
+        toast.info("You're being redirected back to scheduler ")
     }
 
     //fetching the sample endpoints
@@ -47,25 +47,26 @@ function Suggestions(props) {
         let meetingLength=values.MeetingLength;
         let employeeString = '';
 
-        if(values?.employees.length > 1){
+        if(values.employees.length > 1){
             values.employees.forEach((emp)=>{
-                employeeString = employeeString + `employees=${emp?.id}&`;
+                employeeString = employeeString + `employees=${emp.id}&`;
             })
         }else{
-            employeeString = `employees=${values.employees[0]?.id}&`;
+            employeeString = `employees=${values.employees[0].id}&`;
         }
+
+        console.log(values)
 
         const url = `https://stark-castle-84894.herokuapp.com/suggestions?${employeeString}fromDate=${fromDate}&toDate=${toDate}&officehoursStart=${startTime}&officehoursEnd=${endTime}&meetingLength=${meetingLength}`;
 
         axios.get(url)
             .then((result)=>{
-                if(result.status === 200 && result.data.suggestions.start_times.length > 1){
+                if(result.status === 200){
                     notifySuccessfulFetch();
                     setSuccess(true);
                     setSuggestions(result.data.suggestions)
                 }else{
                     notifyEmptySuggestions();
-                    setSuccess(false);
                 }
             })
             .catch((error)=>{
@@ -80,7 +81,7 @@ function Suggestions(props) {
                     history.push("/scheduler");
                 },2000)
             })
-    },[history, values.MeetingLength, values.employees, values.fromDate, values.officeHoursEnd, values.officeHoursStart, values.toDate])
+    },[history, values, values.MeetingLength, values.employees, values.fromDate, values.officeHoursEnd, values.officeHoursStart, values.toDate])
 
     return (
         <Box className={styles.page2}>

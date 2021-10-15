@@ -2,8 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import dateFormat from 'dateformat';
-import DayPickerInput from 'react-day-picker/DayPickerInput';
 import DatePicker from '@mui/lab/DatePicker';
 import {Box,FormControl,TextField,InputLabel,Select,MenuItem,Button, Typography, } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -11,7 +9,6 @@ import TimePicker from '@mui/lab/TimePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { NavLink } from 'react-router-dom';
-import 'react-day-picker/lib/style.css';
 import Loader from './Loader.js';
 import NavigationBar from './NavigationBar';
 import {useStyles} from './formStyles';
@@ -40,7 +37,7 @@ function Scheduler(props) {
         });
     }
 
-    const emptyDataNotify = () => {
+    const employDataNotify = () => {
         toast.error('No Employee Found!',{
             autoClose: 3000,
         })
@@ -51,7 +48,8 @@ function Scheduler(props) {
     }
 
     const submitHandle = () => {
-        if(values.fromDate && values.toDate && values.MeetingLength > 0){
+        if(values.fromDate && values.toDate && values.MeetingLength > 0 && values.employees.length > 0){
+            console.log(values);
             setSubmit(true);
         }else{
             setSubmit(false);
@@ -64,7 +62,7 @@ function Scheduler(props) {
             axios.get(`https://stark-castle-84894.herokuapp.com/employees?q=${query}`)
                 .then((result)=>{
                     if(result.data.matches.length < 1){
-                        emptyDataNotify();
+                        employDataNotify();
                     }else{
                         setEmployeeData(result.data.matches);
                     }
@@ -135,6 +133,7 @@ function Scheduler(props) {
                                     onChange={(e)=>getEmployee(e.target.value)}
                                 />
                             )}
+                            onChange={(event, value) => setValues({...values,employees: value})} // prints the selected value
                         />
                         <FormControl variant="filled" className={styles.inputControl}>
                             <InputLabel id="select-meeting-length">Select Desired Meeting Length</InputLabel>

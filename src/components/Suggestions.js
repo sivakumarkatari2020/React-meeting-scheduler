@@ -1,6 +1,7 @@
 import { Box,Typography,FormControl,FormLabel,FormGroup,FormControlLabel,Checkbox,Button } from '@mui/material';
 import axios from 'axios';
 import {toast} from 'react-toastify';
+import moment from 'moment';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
 import { useStyles } from './styles.js';
@@ -25,15 +26,46 @@ function Suggestions(props) {
         });
     }
 
+    const notifySuccessfulSchedule = () => {
+        toast.success("Successfully booked your slots!",{
+            autoClose: 2000,
+        })
+    }
+
+    const notifyEmptySuggestions = () => {
+        toast.warn("No slots for this combo,change the dates or employes!");
+        toast.info("You're being redirected back to scheduler page!")
+    }
+
     //fetching the sample endpoints
     React.useEffect(()=>{
-        const url = `https://stark-castle-84894.herokuapp.com/suggestions?employees=248086622848468681706182205280565990732&employees=246529435182890502343890064029443600078&fromDate=2015-01-20&toDate=2015-01-22&officehoursStart=8%3A00&officehoursEnd=17%3A00&meetingLength=60`;
+
+        let fromDate=moment(values.fromDate).format('YYYY-MM-DD');
+        let toDate=moment(values.toDate).format('YYYY-MM-DD');
+        let startTime=moment(values.officeHoursStart).format('HH:mm');
+        let endTime=moment(values.officeHoursEnd).format('HH:mm');
+        let meetingLength=values.MeetingLength;
+        let employeeString = '';
+
+        if(values?.employees.length > 1){
+            values.employees.forEach((emp)=>{
+                employeeString = employeeString + `employees=${emp?.id}&`;
+            })
+        }else{
+            employeeString = `employees=${values.employees[0]?.id}&`;
+        }
+
+        const url = `https://stark-castle-84894.herokuapp.com/suggestions?${employeeString}fromDate=${fromDate}&toDate=${toDate}&officehoursStart=${startTime}&officehoursEnd=${endTime}&meetingLength=${meetingLength}`;
+
         axios.get(url)
             .then((result)=>{
-                if(result.status === 200){
+                if(result.status === 200 && result.data.suggestions.start_times.length > 1){
                     notifySuccessfulFetch();
                     setSuccess(true);
                     setSuggestions(result.data.suggestions)
+                }else{
+                    notifyEmptySuggestions();
+                    setSuccess(false);
                 }
             })
             .catch((error)=>{
@@ -48,7 +80,7 @@ function Suggestions(props) {
                     history.push("/scheduler");
                 },2000)
             })
-    },[history])
+    },[history, values.MeetingLength, values.employees, values.fromDate, values.officeHoursEnd, values.officeHoursStart, values.toDate])
 
     return (
         <Box className={styles.page2}>
@@ -83,6 +115,7 @@ function Suggestions(props) {
                         to="/calendar"
                         component={NavLink}
                         className={styles.reserveButton}
+                        onClick={notifySuccessfulSchedule}
                     >
                         <Typography variant={'paragraph'}>Reserve</Typography>
                     </Button>
